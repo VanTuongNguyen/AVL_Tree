@@ -1,4 +1,5 @@
 #include<iostream>
+#include<ctime>
 using namespace std;
 
 struct Node
@@ -147,24 +148,48 @@ void LNR(Node* node)
 	LNR(node->right);
 
 }
+Node* search(Node* node, int data)
+{
+	Node* current = node;
+	bool checker = false;
+	while (current!=NULL)
+	{
+		if (data > current->key)
+			current = current->right;
+		else if (data < current->key)
+			current = current->left;
+		else
+		{
+			checker = true;
+			break;
+
+		}
+	}
+	if (checker)
+		return current;
+	else return NULL;
+}
+Node* random(Node* node, int num)
+{
+	srand(time(0));
+	for (int i = 0; i < num; i++)
+		node = insert(node, rand() % 1000);
+	return node;
+}
 int main()
 {
 	Node *root = NULL;
 
 	
-	root = insert(root, 9);
-	root = insert(root, 5);
-	root = insert(root, 10);
-	root = insert(root, 0);
-	root = insert(root, 6);
-	root = insert(root, 11);
-	root = insert(root, -1);
-	root = insert(root, 1);
-	root = insert(root, 2);
+	root=random(root, 10);
 
 	LNR(root);
 	cout << endl;
-	root = deleteNode(root, 10);
+	/*root = deleteNode(root, 10);
 	LNR(root);
+	Node* s = search(root, 5);
+	if  (s!=NULL)
+	cout << s->key;
+	else cout << "Ko tim thay.";*/
 	system("pause");
 }
